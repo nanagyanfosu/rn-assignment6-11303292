@@ -5,7 +5,6 @@ import ProductCards from './home/ProductCards';
 
  function Homepage (){
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.container}>
       <View style={styles.header}>
 <TouchableOpacity>
@@ -46,15 +45,15 @@ import ProductCards from './home/ProductCards';
 <ProductCards />
 </View>
     </View>
-    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
-    padding: 12,
+    padding: 10,
     margin: 10,
+    marginTop: 20,
   },
   header:{
     flexDirection: 'row',

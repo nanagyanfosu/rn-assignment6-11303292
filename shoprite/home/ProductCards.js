@@ -1,7 +1,10 @@
-import React from "react";
-import { FlatList, StyleSheet, View, Image, Text} from "react-native";
+import React, {useEffect, useState} from "react";
+import { FlatList, StyleSheet, View, Image, Text, TouchableOpacity, ImageBackground, Alert} from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const addToCart = require("./addToCart");
+
+
+const addToCart = require("../assets/add_circle.png");
 
 const productImages = {
   '1' : require('../assets/dress1.png'),
@@ -24,29 +27,57 @@ const products = [
  {id: '7',productName: 'Office Wear',description: 'reversible angora cardigan',price: '99.99', image: productImages['7']}
 ];
 
-const ProductCard =({productName, description, price, image}) => {
+const ProductCard =({productName, description, price, image, onAddToCart, id}) => {
   return  (  //renderItem prop function returns a single product card
   <View style={styles.card}>
-      <Image source={image} style={styles.image} />
-      <TouchableOpacity>
+      <ImageBackground source={image} style={styles.image} >
+      <TouchableOpacity onPress={() => onAddToCart(id)}>
         <Image source={addToCart} style={styles.addToCartButton} />
       </TouchableOpacity>
+      </ImageBackground>
       <Text style={styles.productName}>{productName}</Text>
       <Text style={styles.description}>{description}</Text>
       <Text style={styles.price}>${price}</Text>
   </View>
-)}
+)};
 
 
 function ProductCards() {
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+const loadCart = async () => {
+  const storedCart = await AsyncStorage.getItem('cart')
+  if (storedCart) setCart(JSON.parse(storedCart));
+};
+loadCart();
+  }, []);
+
+  const handleAddToCart = async (item) => {
+    const updatedCart = [...cart, item];
+    setCart(updatedCart);
+
+    await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    Alert.alert("Added to Cart successfully!", `${item.productName} has been added to your cart.`);
+  };
+
+// const handleRemoveFromCart = async (itemId) => {
+//   const updatedCart = cart.filter(item => item.id!== itemId);
+//   setCart(updatedCart);
+//   await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
+//   Alert.alert("Removed from Cart successfully!", `${item.productName} has been removed from your cart.`);
+// };
+
   return(
 <FlatList
     data={products}
     keyExtractor={(item) => item.id} numColumns={2}
-    renderItem={({item}) => <ProductCard image={item.image} productName={item.productName} description={item.description} price={item.price}/> }
-    
-  />
-)};
+    renderItem={({item}) => (<ProductCard image={item.image} productName={item.productName} description={item.description} price={item.price} onAddToCart={()=> handleAddToCart(item)}/>  )}
+    />
+  );
+}
+ 
+  
 
 const styles = StyleSheet.create({
   card: {
@@ -63,7 +94,7 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'cover',
     marginBottom: 15,  //maintains aspect ratio while scaling
-    
+    position: 'relative',
   },
   productName: {
     fontSize: 16,
@@ -78,7 +109,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 5,
-  }
+  },
+  addToCartButton: {
+  position: 'relative',
+ bottom: -160,
+ right: -110,
+  width: 30,
+  height: 30,
+  
+
+    
+  },
  });
 
 
