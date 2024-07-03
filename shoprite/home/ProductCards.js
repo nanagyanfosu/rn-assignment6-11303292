@@ -28,7 +28,7 @@ const products = [
 ];
 
 const ProductCard =({productName, description, price, image, onAddToCart, id}) => {
-  return  (  //renderItem prop function returns a single product card
+  return  (
   <View style={styles.card}>
       <ImageBackground source={image} style={styles.image} >
       <TouchableOpacity onPress={() => onAddToCart(id)}>
@@ -61,12 +61,6 @@ loadCart();
     Alert.alert("Added to Cart successfully!", `${item.productName} has been added to your cart.`);
   };
 
-// const handleRemoveFromCart = async (itemId) => {
-//   const updatedCart = cart.filter(item => item.id!== itemId);
-//   setCart(updatedCart);
-//   await AsyncStorage.setItem('cart', JSON.stringify(updatedCart));
-//   Alert.alert("Removed from Cart successfully!", `${item.productName} has been removed from your cart.`);
-// };
 
   return(
 <FlatList
