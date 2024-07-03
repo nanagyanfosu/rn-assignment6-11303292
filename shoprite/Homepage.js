@@ -1,9 +1,18 @@
 import React from'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image,FlatList} from 'react-native';
 import ProductCards from './home/ProductCards';
+import {useCart} from './home/CartContext';
+import {useNavigation} from '@react-navigation/native';
 
 
- function Homepage (){
+
+ const Homepage = () =>{
+    const {addToCart} = useCart();
+
+    const handleAddToCart = () =>{
+        addToCart(item)
+    }
+    const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -17,7 +26,7 @@ import ProductCards from './home/ProductCards';
 <TouchableOpacity>
   <Image source ={require('./assets/Search.png')} size={25}></Image>
 </TouchableOpacity>
-<TouchableOpacity>
+<TouchableOpacity onPress={() => navigation.navigate('Cart')}>
   <Image source ={require('./assets/shoppingBag.png')} size={25}></Image>
 </TouchableOpacity>
 </View>
@@ -43,6 +52,7 @@ import ProductCards from './home/ProductCards';
 </View> */}
 <View>
 <ProductCards />
+
 </View>
     </View>
   );
@@ -51,9 +61,9 @@ import ProductCards from './home/ProductCards';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
-    padding: 10,
-    margin: 10,
-    marginTop: 20,
+    padding: 25,
+    
+  
   },
   header:{
     flexDirection: 'row',

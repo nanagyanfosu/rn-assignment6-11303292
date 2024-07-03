@@ -16,15 +16,14 @@ const productImages = {
   '7' : require('../assets/dress7.png'),
 
 }
-
 const products = [
-  {id: '1',productName: 'Office Wear',description: 'reversible angora cardigan',price: '99.99', image: productImages['1']},
-   {id: '2',productName: 'Office Wear',description: 'reversible angora cardigan',price: '99.99', image: productImages['2']},
-  {id: '3',productName: 'Office Wear',description: 'reversible angora cardigan',price: '99.99', image: productImages['3']},
- {id: '4',productName: 'Office Wear',description: 'reversible angora cardigan',price: '99.99', image: productImages['4']},
- {id: '5',productName: 'Office Wear',description: 'reversible angora cardigan',price: '99.99', image: productImages['5']},
- {id: '6',productName: 'Office Wear',description: 'reversible angora cardigan',price: '99.99', image: productImages['6']},
- {id: '7',productName: 'Office Wear',description: 'reversible angora cardigan',price: '99.99', image: productImages['7']}
+  {id: '1',productName: 'Office Wear',description: 'Office wear for office',price: '69.99', image: productImages['1']},
+   {id: '2',productName: 'Church Wear',description: 'Church wear for church',price: '59.99', image: productImages['2']},
+  {id: '3',productName: 'Casual Wear',description: 'Reversible angora cardigan',price: '29.99', image: productImages['3']},
+ {id: '4',productName: ' Lamerei',description: 'Recycle Boucle Knit Cardigan Pink',price: '39.99', image: productImages['4']},
+ {id: '5',productName: 'School Wear',description: 'Reversible angora cardigan',price: '109.99', image: productImages['5']},
+ {id: '6',productName: 'Hospital Wear',description: 'Hospital wear for hospitals',price: '79.99', image: productImages['6']},
+ {id: '7',productName: 'Office Wear',description: 'Office wear for office',price: '89.99', image: productImages['7']}
 ];
 
 const ProductCard =({productName, description, price, image, onAddToCart, id}) => {
@@ -63,6 +62,7 @@ loadCart();
 
 
   return(
+    
 <FlatList
     data={products}
     keyExtractor={(item) => item.id} numColumns={2}
